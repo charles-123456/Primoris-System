@@ -1,0 +1,721 @@
+<odoo>
+    <template id="report_invoice_report_base">
+    <t t-call="web.html_container">
+        <t>
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <style type="text/css">
+                       .set_border {
+                            border-collapse: collapse;
+                            border: 1px solid #000;
+                        }
+                        .alighleft {
+                        float:left;
+                        padding-left:10px;
+                        }
+                        .alignright {
+                            float: right;
+                        padding-right:10px;
+                        }
+                        .set_pad{
+                        padding-left:10px;
+                        }
+                        .myimg{
+                          width:300px;
+                          height:200px;
+                          object-fit:cover;
+                        padding-left:10px;
+                        margin-top:5px;
+                        }
+                        .grid-container{
+                        display:grid;
+                        grid-template-columns:100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
+                        grid-column:span 2;
+                        background-color:#f5f5f0;
+                        }
+                        .grid-item {
+                          border-top: 1px solid ;
+                          font-size: 14px;
+                          grid-row
+                        }
+                        #color_none{
+                        background-color:#FFFFFF;
+                        }
+                        .rm_border_top{
+                        border-top:0.5px solid;
+                        border-bottom:thin;
+                        }
+                        .item1{
+                        grid-column: 1 / span 10;
+                        }
+                    </style>
+                    <div class="oe_structure" />
+                    <div width="100%" style="border: 2px solid black;outline-style: solid;outline-color: black;padding:8px;table-layout:fixed;">
+                        <div>
+                            <img t-if="o.partner_id.image_1920"  t-att-src="image_data_uri(o.partner_id.image_1920)" class="myimg"></img>
+
+                             <p style="margin-top:50px;padding-right:70px;font-size:14px;" class="alignright">
+                                    <b>Corporate Office:</b><br></br>
+                                    <t t-if="o.company_id.street">
+                                        <span t-field="o.company_id.street"/><br></br>
+                                    </t>
+                                    <t t-if="o.company_id.street2">
+                                       <span t-field="o.company_id.street2"/><br></br>
+                                    </t>
+                                    <t t-if="o.company_id.city">
+                                        <span t-field="o.company_id.city"/>,
+                                    </t>
+                                    <t t-if="o.company_id.state_id.name">
+                                        <span t-field="o.company_id.state_id.name"/>-
+                                    </t>
+                                    <t t-if="o.company_id.zip">
+                                      <span t-field="o.company_id.zip"/><br></br>
+                                    </t>
+                                    <t t-if="o.company_id.country_id.name">
+                                        <span t-field="o.company_id.country_id.name"/>
+                                    </t>
+                             </p>
+                        </div>
+
+                        <br></br>
+                        <hr style="border:1px solid"/>
+                      <table width="100%" style="padding-left:8px;" class="set_border">
+                          <tr>
+                              <td  class="set_border" colspan="7" >
+                                  <center>
+                                      TAX INVOICE
+                                  </center>
+                              </td>
+                          </tr>
+                          <tr>
+                                 <th  class="set_border" colspan="4" style="text-align:right;">
+                                     Details of Receiver
+                                </th>
+                                <th class="set_border" style="padding-left:10px;">
+                                   Billed To
+                                </th>
+                                <td class="set_border" colspan="4">
+
+                                </td>
+                          </tr>
+                          <tr>
+                              <th class="set_border">
+                                  Name
+                              </th >
+                              <td class="set_border" colspan="3">
+                                  <t t-if="o.partner_id.name">
+                                      <span t-field="o.partner_id.name"/>
+                                  </t>
+                              </td>
+                              <th class="set_border">
+                                  Invoice No
+                              </th>
+                              <td class="set_border" colspan="2">
+                                  <t t-if="o.name">
+                                      <span t-field="o.name"/>
+                                  </t>
+                              </td>
+                          </tr>
+                          <tr>
+                              <th class="set_border" rowspan="3">
+                                Address
+                              </th>
+                              <td class="set_border" colspan="3">
+                                 <t t-if="o.partner_id.street">
+                                        <span t-field="o.partner_id.street"/><br></br>
+                                    </t>
+                                    <t t-if="o.partner_id.street2">
+                                       <span t-field="o.partner_id.street2"/><br></br>
+                                    </t>
+                              </td>
+                              <th class="set_border">
+                                  Invoice Date
+                              </th>
+                              <td class="set_border" colspan="2">
+                                    <t t-if="o.invoice_date">
+                                        <span t-field="o.invoice_date" t-options="{'format':'dd/MM/yyyy'}"></span>
+                                    </t>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="set_border" colspan="3">
+                                 <t t-if="o.partner_id.city">
+                                        <span t-field="o.partner_id.city"/>,
+                                    </t>
+                                    <t t-if="o.partner_id.state_id.name">
+                                        <span t-field="o.partner_id.state_id.name"/>-
+                                    </t>
+                                    <t t-if="o.partner_id.zip">
+                                      <span t-field="o.partner_id.zip"/><br></br>
+                                    </t>
+                              </td>
+                              <th class="set_border">
+                                  GSTIN
+                              </th>
+                              <td class="set_border" colspan="2">
+                                   <t t-if="o.company_id.vat">
+                                       <span t-field="o.company_id.vat"/>
+                                   </t>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="set_border" colspan="3">
+                                  <t t-if="o.partner_id.country_id.name">
+                                        <span t-field="o.partner_id.country_id.name"/>
+                                    </t>
+                              </td>
+                              <th class="set_border">
+                                  State
+                              </th>
+                              <td class="set_border">
+                                    <t t-if="o.company_id.state_id.name">
+                                        <span t-field="o.company_id.state_id.name"/>
+                                    </t>
+                              </td>
+                              <td class="set_border">
+                                  <b>State code:</b> <t t-if="o.company_id.state_id.code">
+                                  <span t-field="o.company_id.state_id.code"/>
+                              </t>
+                              </td>
+                          </tr>
+                          <tr>
+                              <th class="set_border">
+                                  GSTIN/UIN
+                              </th>
+                              <td class="set_border" colspan="3">
+                                  <t t-if="o.partner_id.vat">
+                                      <span t-field="o.partner_id.vat"/>
+                                  </t>
+                              </td >
+                              <td class="set_border" colspan="3">
+
+                              </td>
+                          </tr>
+                           <tr>
+                              <th class="set_border">
+                                  State
+                              </th>
+                              <td class="set_border">
+                                  <t t-if="o.partner_id.state_id.name">
+                                      <span t-field="o.partner_id.state_id.name"/>
+                                  </t>
+                              </td>
+                              <th class="set_border">
+                                  <center>State Code</center>
+                              </th>
+                              <td class="set_border">
+                                  <center>
+                                      <t t-if="o.partner_id.state_id.code">
+                                          <span t-field="o.partner_id.state_id.code"/>
+                                      </t>
+                                  </center>
+                              </td>
+                               <th class="set_border" colspan="3" style="text-align:center;">
+                                   Consolidate Invoice No
+                               </th>
+                          </tr>
+                          <tr>
+                              <td class="set_border" rowspan="4" colspan="4">
+
+                              </td>
+                              <td class="set_border" colspan="3" style="text-align:center;">
+                                  CGM00075732
+                              </td>
+                          </tr>
+                          <tr>
+                              <th class="set_border">Unit</th>
+                              <td class="set_border" colspan="2">IN34</td>
+                          </tr>
+                          <tr>
+
+                          </tr>
+                          <tr>
+                              <td class="set_border" colspan="3" style="text-align:center">
+                                  SAC code<span t-if="o.invoice_line_ids.product_id.l10n_in_hsn_code" t-field="o.invoice_line_ids.product_id.l10n_in_hsn_code"></span>-contracting service
+                              </td>
+                          </tr>
+                          <tr>
+                              <th class="set_border" colspan="3" style="text-align:center;">
+                                  Employee Name(Contract Id)
+                              </th>
+                              <th class="set_border" style="text-align:center;">
+                                  HSN/SAC
+                              </th>
+                              <th class="set_border" colspan="2" style="text-align:center;">
+                                  Invoice(Month and Year)
+                              </th>
+                              <th class="set_border" style="text-align:center;">
+                                  Invoice Amount
+                              </th>
+                          </tr>
+                          <!--for lop will perform-->
+                              <tr>
+                                  <td class="set_border" colspan="3">
+
+                                          <t t-foreach="o.lines_per_project()" t-as="t">
+                                       <center> <t t-esc="t['lines'].project_id.timesheet_ids.employee_id.name"/></center>
+                                          <!--<span t-field="o.report_analytic_lines.project_id.timesheet_ids.employee_id.name"/>-->
+                                        <!--<t t-esc="', '.join(l.employee_id.mapped('name'))"/>-->
+                                      </t>
+
+                                  </td>
+                              <td class="set_border">
+                                 <center>
+                                     <span t-if="o.invoice_line_ids.product_id.l10n_in_hsn_code" t-field="o.invoice_line_ids.product_id.l10n_in_hsn_code"></span>
+                                 </center>
+                              </td>
+                              <td class="set_border" colspan="2">
+                                  <center><span>23-Mar</span></center>
+                              </td>
+                              <td class="set_border">
+                                  <center><span t-if="o.invoice_line_ids.price_subtotal" t-field="o.invoice_line_ids.price_subtotal"/></center>
+                              </td>
+                          </tr>
+                            <tr>
+                              <td class="set_border" rowspan="7" colspan="3">
+
+                                  Bank Name: <t t-foreach="o.company_id.partner_id.bank_ids" t-as="b">
+                                                <t t-esc="b.bank_id.name"/>
+                                            </t><br></br>
+                                   Bank Account No:<t t-foreach="o.company_id.partner_id.bank_ids" t-as="b">
+                                   <t t-esc="b.acc_number"/></t><br></br>
+                                  Branch :<t t-foreach="o.company_id.partner_id.bank_ids" t-as="b">
+                                            <t t-esc="b.bank_id.state.name"/></t><br></br>
+                                  Bank IFSC Code:<t t-foreach="o.company_id.partner_id.bank_ids" t-as="b">
+                                                    <t t-esc="b.bank_id.bic"/></t><br></br>
+                              </td>
+                              <td class="set_border" style="height:12px;">
+
+                              </td>
+                              <td colspan="2" style="height:12px;">
+
+                              </td>
+                              <td class="set_border" style="height:12px;">
+
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="set_border">
+                                  Total
+                              </td>
+                              <td class="set_border"></td>
+                              <td class="set_border"></td>
+                              <td class="set_border">
+                                  <t t-if="o.amount_untaxed">
+                                      <span t-field="o.amount_untaxed"/>
+                                  </t>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="set_border">
+                                  CGST <t t-foreach="o.invoice_line_ids" t-as="l"><t >
+                                  <span t-esc="round(o.get_gst(o.id,l.product_id.id)[0],2)"></span>
+                                  %
+                              </t>
+                              </t>
+                              </td>
+                              <td class="set_border"></td>
+                              <td class="set_border"></td>
+                              <td class="set_border">
+                                  <t t-foreach="o.invoice_line_ids" t-as="l">
+                                    <span t-esc="round(o.get_gst(o.id,l.product_id.id)[1],2)"/>
+                                   </t>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="set_border">
+                                  SGST <t t-foreach="o.invoice_line_ids" t-as="l"><t >
+                                  <span t-esc="round(o.get_gst(o.id,l.product_id.id)[0],2)"></span>
+                                  %
+                              </t>
+                              </t>
+                              </td>
+                              <td class="set_border"></td>
+                              <td class="set_border"></td>
+                              <td class="set_border">
+                                   <t t-foreach="o.invoice_line_ids" t-as="l">
+                                    <span t-esc="round(o.get_gst(o.id,l.product_id.id)[1],2)"/>
+                                  </t>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="set_border">
+                                  IGST <t t-foreach="o.invoice_line_ids" t-as="l"><t><span t-esc="round(o.get_igst(o.id,l.product_id.id)[0],2)"></span></t>%</t>
+                              </td>
+                              <td class="set_border"></td>
+                              <td class="set_border"></td>
+                              <td class="set_border">
+                                <t t-foreach="o.invoice_line_ids" t-as="l"><t><span t-esc="round(o.get_igst(o.id,l.product_id.id)[1],2)"/></t></t>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="set_border" colspan="2">
+                                  Tax Amount GST
+                              </td>
+                              <td class="set_border"></td>
+                              <td class="set_border">
+                                 <t t-if="o.amount_total">
+                                    <span t-field="o.amount_total"/>
+                                </t>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="set_border" colspan="2">
+                                  Tax Amount After TAX
+                              </td>
+                              <td class="set_border"></td>
+                              <td class="set_border">
+                                <t t-if="o.amount_total">
+                                    <span t-field="o.amount_total"/>
+                                </t>
+                              </td>
+                          </tr>
+
+               </table>
+                    <br></br>
+                    <div>
+                        Make all the cheques payable to "<b>Advantage one Human resource Prv Lmt</b>payable at Hydrabad
+                    </div>
+                    <br></br>
+                    <div>
+                        Thank You for your business
+                    </div>
+                    <div align="right" style="padding-right:20px;">
+                        <b>Advantage one Human resource Prv Lmt</b>
+                    </div>
+                    <div align="right" style="padding-right:25px;">
+                        BKREDDY
+                        JAYA RAMY REDDY
+                    </div>
+                    <br></br>
+                    <div align="right" style="padding-right:35px;">
+                        <b>Authorised Signatory</b>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="page">
+                    <hr/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <h3 style="padding-left:20px">Time Sheet</h3>
+                    <center>
+                          <table cellspacing="0" cellpadding="0" style="border: none;font-size:14px;">
+                        <tr>
+                            <td>
+                                ID
+                            </td>
+                            <td class="set_pad">
+                                CDFDF35353
+                            </td>
+                            <td class="set_pad">
+                                Worker
+                            </td>
+                            <td class="set_pad">
+                                SDSDDSFSD,SSD(SDFSD3543)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Period
+                            </td>
+                            <td class="set_pad">
+                                1/12/2011 to 1/11/2012
+                            </td>
+                            <td class="set_pad">
+                                Job Posting
+                            </td>
+                            <td class="set_pad">
+                                IN | R2dsdfsd
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">
+                                Site
+                            </td>
+                            <td rowspan="2" class="set_pad">
+                                IN38-CAPGIMINI PRV LMT-BMP-OUT
+                            </td>
+                            <td class="set_pad">
+                                Job Posting Owner
+                            </td>
+                            <td class="set_pad">
+                                Bhav,Tursha(trucha.gmail@com)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="set_pad">
+                                Buyer
+                            </td>
+                            <td class="set_pad">
+                               Capgimini
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Business Unit
+                            </td>
+                            <td class="set_pad">
+                               INR32-BSV_bsv Indigo
+                            </td>
+                            <td class="set_pad">
+                              Supplier
+                            </td>
+                            <td class="set_pad">
+                               ADVANTAGE ONE HUMAN RESOURCE
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Status
+                            </td>
+                            <td class="set_pad">
+                                Invoiced
+                            </td>
+                            <td class="set_pad">
+                                Submit Date
+                            </td>
+                            <td class="set_pad">
+                                12/2/2021 01:23 PM
+                            </td>
+                        </tr>
+                    </table>
+                  </center>
+                    <br/>
+                    <br/>
+                    <table width="100%" >
+                        <h3>Shift</h3>
+                        <tr style="background-color:#f5f5f0;border-top:1px solid;border-bottom:1px solid;">
+                            <th colspan="2">Day</th>
+                            <th>29/3 Mon</th>
+                            <th>30/3 Tue</th>
+                            <th>31/3 Wed</th>
+                            <th>1/4 Thu</th>
+                            <th>2/4 Fri</th>
+                            <th>3/4 Sat</th>
+                            <th>4/4 Sun</th>
+                            <th></th>
+                            <th>Total</th>
+                        </tr>
+                        <tr style="background-color:#f5f5f0;border-top:1px solid;border-bottom:1px solid;">
+                            <td colspan="2"><b>Shift</b></td>
+                            <td>India <br></br>
+                            Generic Shift</td>
+                            <td>India <br></br>
+                            Generic Shift</td>
+                            <td>India <br></br>
+                            Generic Shift</td>
+                            <td>India <br></br>
+                            Generic Shift</td>
+                            <td>India <br></br>
+                            Generic Shift</td>
+                            <td>India <br></br>
+                            Generic Shift</td>
+                            <td>India <br></br>
+                            Generic Shift</td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                    </table>
+                    <br></br>
+                    <br></br>
+                    <table width="100%" >
+                        <h3>Time Worked</h3>
+                        <tr style="background-color:#f5f5f0;border-top:1px solid;border-bottom:1px solid;">
+                            <th colspan="2">Day</th>
+                            <t t-foreach="o.value1" t-as="val">
+                                <th><span t-esc="val"/></th>
+                            </t>
+
+                          <!--  <th><span t-field="o.value2"/></th>
+                            <th><span t-field="o.value3"/></th>
+                            <th><span t-field="o.value4"/></th>
+                            <th><span t-field="o.value5"/></th>
+                            <th><span t-field="o.value6"/></th>
+                            <th><span t-field="o.value7"/></th>-->
+                            <th></th>
+                            <th>Total</th>
+                        </tr>
+                        <tr style="background-color:#f5f5f0;border-top:1px thin;border-bottom:1px solid;">
+                            <td colspan="11"><b>Billable</b></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid;">
+                            <th colspan="11">
+                                <!--<span t-field="o.task_name"/>-->
+                            </th>
+                        </tr>
+                        <tr style="border-bottom:1px solid;">
+                            <td colspan="2">Time Worked</td>
+
+                            <td><span t-field="o.value1"/></td>
+                           <!-- <td><span t-field="o.valuey2"/></td>
+                            <td><span t-field="o.valuey3"/></td>
+                            <td><span t-field="o.valuey4"/></td>
+                            <td><span t-field="o.valuey5"/></td>
+                            <td><span t-field="o.valuey6"/></td>
+                            <td><span t-field="o.valuey7"/></td>-->
+                            <td></td>
+                            <td>Total</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid;">
+                            <th colspan="11">
+                                <!--<span t-field="o.task_name"/>-->
+                            </th>
+                        </tr>
+                        <tr style="border-bottom:1px solid;">
+                            <td colspan="2">Time Worked</td>
+                            <td>0h 0m</td>
+                            <td>0h 0m</td>
+                            <td>0h 0m</td>
+                            <td>0h 0m</td>
+                            <td>0h 0m</td>
+                            <td>0h 0m</td>
+                            <td>0h 0m</td>
+                            <td></td>
+                            <td>Total</td>
+                        </tr>
+                         <tr style="border-bottom:1px solid;">
+                            <td colspan="2">Total</td>
+                            <td>9h 0m</td>
+                            <td>9h 0m</td>
+                            <td>9h 0m</td>
+                            <td>9h 0m</td>
+                            <td>0h 0m</td>
+                            <td>0h 0m</td>
+                            <td>0h 0m</td>
+                            <td></td>
+                            <td>36h 0m</td>
+                        </tr>
+                    </table>
+                    <br></br>
+                    <br></br>
+                    <table width="100%">
+                         <h3>Time Sheet Rate</h3>
+                        <h3>Group</h3>
+                         <tr style="background-color:#f5f5f0;border-top:1px solid;border-bottom:1px solid;">
+                            <th colspan="2">Day</th>
+                            <th>29/3 Mon</th>
+                            <th>30/3 Tue</th>
+                            <th>31/3 Wed</th>
+                            <th>1/4 Thu</th>
+                            <th>2/4 Fri</th>
+                            <th>3/4 Sat</th>
+                            <th>4/4 Sun</th>
+                            <th></th>
+                            <th>Total</th>
+                        </tr>
+                        <tr style="border-bottom:1px solid;">
+                            <th colspan="2">1 - Hours Worked (1 - Hours Worked)</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                         <tr style="border-bottom:1px solid;">
+                            <td colspan="2">Standard Time (EXTSUB_Time Std) / Hr</td>
+                            <td>9h 0m</td>
+                            <td>9h 0m</td>
+                            <td>9h 0m</td>
+                            <td>9h 0m</td>
+                            <td>0h 0m</td>
+                            <td>0h 0m</td>
+                            <td>0h 0m</td>
+                            <td></td>
+                            <td>36h 0m</td>
+                        </tr>
+                    </table>
+                    <br></br>
+                    <br></br>
+                    <table width="100%" >
+                        <h3>Accounting (INR)</h3>
+                         <tr style="background-color:#f5f5f0;border-top:1px solid;border-bottom:1px solid;">
+                            <th colspan="12">Pay to Worker</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Rate Category / UOM</th>
+                            <td colspan="2"><center>Pay Rate</center></td>
+                            <td colspan="2"><center>Quantity</center></td>
+                            <td colspan="2"><center>Days</center></td>
+                            <td colspan="2"><center>Amount</center></td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Standard Time</th>
+                            <td colspan="2"><center>334.4</center></td>
+                            <td colspan="2"><center>22.4</center></td>
+                            <td colspan="2"><center>0.00</center></td>
+                            <td colspan="2"><center>23,44,4534</center></td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <th colspan="10" style="text-align:right;padding-right:50px;">Total</th>
+                            <td colspan="2" align="right">12,231,421</td>
+                        </tr>
+                        <br></br>
+                        <br></br>
+                        <tr style="background-color:#f5f5f0;border-top:1px solid;border-bottom:1px solid;">
+                            <th colspan="12">Bill to Buyer</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Rate Category / UOM</th>
+                            <td colspan="2"><center>Pay Rate</center></td>
+                            <td colspan="2"><center>Quantity</center></td>
+                            <td colspan="2"><center>Days</center></td>
+                            <td colspan="2"><center>Amount</center></td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Standard Time</th>
+                            <td colspan="2"><center>334.4</center></td>
+                            <td colspan="2"><center>22.4</center></td>
+                            <td colspan="2"><center>0.00</center></td>
+                            <td colspan="2"><center>23,44,4534</center></td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Accounting (INR)</th>
+                            <th colspan="8" style="text-align:right;padding-right:50px;">Total</th>
+                            <td colspan="2" align="right">12,231,421</td>
+                        </tr>
+                    </table>
+                    <br></br>
+                    <br></br>
+                    <table width="100%">
+                        <h3 >Time Sheet Custom Fields</h3>
+                        <hr/>
+                         <tr style="border-bottom:1px solid;">
+                             <th colspan="2" style="width:30px">Back To Contract</th>
+                             <th colspan="10"><center>No</center></th>
+                         </tr>
+                    </table>
+                    <br></br>
+                    <br></br>
+                    <table width="100%">
+                        <h3>Accumulated Absence</h3>
+                        <hr/>
+                        <tr style="border-bottom:1px solid;">
+                            <th colspan="2">Start Date</th>
+                            <th >End Date</th>
+                            <th >Number of days absent</th>
+                            <th >Number of Hours</th>
+                            <th >Reason</th>
+                            <th colspan="2">Comments</th>
+                            <th>Entered By</th>
+                            <th>Submitted Date</th>
+                        </tr>
+                    </table>
+                 </div>
+            </t>
+            </t>
+        </t>
+    </t>
+</template>
+</odoo>
