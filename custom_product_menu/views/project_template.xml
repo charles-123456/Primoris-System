@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock.product_template_action_product" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="domain">['|','&amp;','|','&amp;','&amp;','&amp;',('categ_id.parent_id.name','!=','Liquid'),('categ_id.name','!=','Compaign'),('categ_id.parent_id.name','!=','Solid'),('route_ids.name','=','Raw Material (Buy Products)'),('categ_id.name','=','All'),('route_ids.name','=','Raw Material (Buy Products)'),('route_ids.name','=','In Process')]</field>
+    </record>
+</odoo>
